@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #040a0f; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #050b10; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CSV and Select Store</h1>
+        <form action="/" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="store_dropdown">Store</label>
+                <select id="store_dropdown" name="store_dropdown" required>
+                    <option value="">Select Store</option>
+                    {% for store in stores %}
+                        <option value="{{ store[0] }}">{{ store[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="from_date_picker">From Date</label>
+                <input type="date" name="from_date_picker" id="from_date_picker" required>
+            </div>
+            <div class="form-group">
+                <label for="to_date_picker">To Date</label>
+                <input type="date" name="to_date_picker" id="to_date_picker" required>
+            </div>
+            <div class="form-group">
+                <label for="source_file">Upload CSV File</label>
+                <input type="file" name="source_file" id="source_file" accept=".csv" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var dropdownInput = document.getElementById("store_dropdown").value;
+            var fromDateInput = document.getElementById("from_date_picker").value;
+            var toDateInput = document.getElementById("to_date_picker").value;
+
+            if (dropdownInput === "") {
+                alert("Please select a store.");
+                return false;
+            }
+
+            if (fromDateInput === "" || toDateInput === "") {
+                alert("Please select both from and to dates.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
